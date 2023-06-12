@@ -1,0 +1,10 @@
+opencv-python
+glob2
+requests
+beautifulsoup4
+requires.io
+pytest-shutil
+random2
+selenium
+chromedriver_binary
+webdriver_manager
