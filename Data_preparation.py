@@ -3,6 +3,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
 import os, cv2, glob
+import requests
+from bs4 import BeautifulSoup as bs
+import urllib, urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+import time, shutil
+import random
 
 # Data Visualization
 df_train= pd.read_csv('data/train.csv')
