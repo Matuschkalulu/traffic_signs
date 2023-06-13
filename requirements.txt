@@ -6,3 +6,4 @@ pytest-shutil
 random2
 selenium
 webdriver_manager
+tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
