@@ -1,8 +1,11 @@
 import traffic_signs_code.params
 import os
+import random
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 plt.figure(figsize=(20,20))
-img_folder=os.path.join(os.getcwd(),'..','raw_data','Train','0')
+img_folder=
 print(img_folder)
 for i in range(5):
     file = random.choice(os.listdir(img_folder))
