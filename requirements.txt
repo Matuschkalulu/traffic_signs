@@ -1,0 +1,8 @@
+opencv-python
+glob2
+requests
+beautifulsoup4
+pytest-shutil
+random2
+selenium
+webdriver_manager
