@@ -168,7 +168,7 @@ def evaluate_base_model(
 
     return metrics
 
-def model_evaluate(model, X, y):
+def model_VGG_evaluate(model, X, y):
   score= model.evaluate(X, y)[1]
   return f'Test score= {score:.3f}'
 
