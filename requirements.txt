@@ -1,3 +1,4 @@
+colorama
 opencv-python
 glob2
 requests
