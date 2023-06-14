@@ -24,6 +24,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 import os, cv2, glob
+#End of Import
 
 def create_dataset(data_path):
     img_data_array=[]
