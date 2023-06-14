@@ -7,3 +7,4 @@ raw_data
 .python-version
 __pycache__
 
+yolov3.weights
