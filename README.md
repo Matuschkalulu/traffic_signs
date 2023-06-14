@@ -7,9 +7,9 @@ Comunities are responsible to access free view at the traffic signs to assure ev
 To attack this problem: This project aims to make a first step to improve that risk.
 
 The project follows different goals
+
 	1. Gathering and Creating a Dataset for Unrecognizable Traffic Signs
 	2. Creating a "Binary-Classification" Model via CNN for unrecognizable an recognizable Traffic Signs
-
 	3. Traffic Sign Detection in Videos and Classification
 
 	
