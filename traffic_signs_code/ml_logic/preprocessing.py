@@ -23,6 +23,9 @@ def train_test_preproc(X,y, test_size = 0.3, random_state = 42, model_selection 
     if model_selection == 'VGG':
         X_train= preprocess_input(X_train).astype('float')
         X_test= preprocess_input(X_test).astype('float')
+    if model_selection ==  'Base':
+                X_train /= 255.
+                X_test /= 255.
 
     print("\N{white heavy check mark}" +" Data was sucessfully split and preprocessed")
 
