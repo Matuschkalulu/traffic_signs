@@ -137,12 +137,10 @@ def train_VGG_augment(model_aug, train_datagen, X_train_aug, y_train_aug, X_val,
   print(f"✅ VGG-Model evaluated, Accuracy: {round(accuracy, 3)}")
   return model_aug, history_aug
 
-def evaluate_base_model(
-        model: Model,
-        X: np.ndarray,
-        y: np.ndarray,
-        batch_size=64
-    ):
+def evaluate_base_model(model: Model,
+                        X: np.ndarray,
+                        y: np.ndarray,
+                        batch_size=64):
 
     """
     Evaluate trained model performance on the dataset
@@ -153,19 +151,17 @@ def evaluate_base_model(
         print(f"\n❌ No model to evaluate")
         return None
 
-    metrics = model.evaluate(
-        x=X,
-        y=y,
-        batch_size=batch_size,
-        verbose=0,
-        # callbacks=None,
-        return_dict=True
+    metrics = model.evaluate(x=X,
+                             y=y,
+                             batch_size=batch_size,
+                             verbose=0,
+                             # callbacks=None,
+                             return_dict=True
     )
+
     loss = metrics["loss"]
     accuracy = metrics["accuracy"]
-
     print(f"✅ Base-Model evaluated, Accuracy: {round(accuracy, 3)}")
-
     return metrics
 
 def model_VGG_evaluate(model, X, y):
