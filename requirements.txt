@@ -7,3 +7,10 @@ random2
 selenium
 webdriver_manager
 tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
+fastapi
+pytz
+uvicorn
+httpx
+pytest-asyncio
+python-dotenv
+#protobuf==3.20.1

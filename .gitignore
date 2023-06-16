@@ -1,3 +1,4 @@
+.env
 recognizable_signs/
 unrecognizable_signs/
 videos/
@@ -6,4 +7,3 @@ raw_data
 .phyton-version
 .python-version
 __pycache__
-
