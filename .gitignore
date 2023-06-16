@@ -4,6 +4,7 @@ unrecognizable_signs/
 videos/
 images
 raw_data
-.phyton-version
 .python-version
 __pycache__
+yolov3.weights
+
