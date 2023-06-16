@@ -2,5 +2,8 @@ recognizable_signs/
 unrecognizable_signs/
 videos/
 images
-traffic_signs
+raw_data
 .python-version
+__pycache__
+yolov3.weights
+
