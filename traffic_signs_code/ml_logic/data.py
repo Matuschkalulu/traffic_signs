@@ -11,7 +11,7 @@ def create_dataset(model_selected = 'Base'):
     Input
     As input to this function some has to select a model, to decide whether the image has to be normalized or not
     The default input is "Base"
-    Other inputs: "Vgg"
+    Other inputs: "VGG"
 
     =========
     Return:
