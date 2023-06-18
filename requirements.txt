@@ -1,1 +1,12 @@
-streamlit
+colorama
+opencv-python
+glob2
+requests
+beautifulsoup4
+pytest-shutil
+random2
+selenium
+webdriver_manager
+numpy==1.23.5
+pandas==1.5.3
+tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
