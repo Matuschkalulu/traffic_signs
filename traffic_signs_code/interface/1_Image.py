@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from PIL import Image
+import os
 
 # for the Streamlit interface
 st.title("Traffic Sign Recognition")
@@ -13,7 +14,8 @@ def local_css(file_name):
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Loading CSS
-local_css("frontend/css/streamlit.css")
+url_css = os.path.join(os.getcwd(), 'traffic_signs_code','interface','frontend', 'css', 'streamlit.css')
+local_css(url_css)
 
 
 def remote_css(url):
