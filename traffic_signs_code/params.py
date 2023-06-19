@@ -9,7 +9,7 @@ IMG_test_path = os.path.join(os.getcwd(),'raw_data','test_images')
 MODELS_path = os.path.join(os.getcwd(),'raw_data','models')
 Yolo_Model_path = os.path.join(os.getcwd(),'raw_data','models', 'yolo_v2.pt')
 
-Crop_path= os.path.join(os.getcwd(),'raw_data', 'crop_images')
+CROP_PATH= os.path.join(os.getcwd(),'raw_data', 'crop_images')
 
 LABELS = ['readable', 'unreadable']
 
