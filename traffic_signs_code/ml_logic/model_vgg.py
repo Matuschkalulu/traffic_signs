@@ -86,7 +86,7 @@ def test_model(test_path, model_vgg):
         print("\N{white heavy check mark}" + " Successfully tested")
 
 if __name__== '__main__':
-    Train_data, Test_data = data.create_dataset('VGG')
+    Train_data, Test_data = data.create_dataset_with_split('VGG')
     X_train_preproc, X_val_preproc ,X_test_preproc, y_train, y_val, y_test= preprocessing.train_test_preproc(Train_data, Test_data, model_selection='VGG')
 
     model_vgg = initialize_VGG_model()

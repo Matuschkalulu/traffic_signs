@@ -2,8 +2,8 @@ import os
 
 IMG_PATH =  os.path.join(os.getcwd(),'raw_data','Train')
 SPLIT_PATH =  os.path.join(os.getcwd(),'raw_data','split_data')
-Train_path =  os.path.join(os.getcwd(),'raw_data','split_data', 'train')
-Test_path =  os.path.join(os.getcwd(),'raw_data','split_data', 'test')
+SPLIT_TRAIN_PATH=  os.path.join(os.getcwd(),'raw_data','split_data', 'train')
+SPLIT_TEST_PATH =  os.path.join(os.getcwd(),'raw_data','split_data', 'test')
 
 IMG_test_path = os.path.join(os.getcwd(),'raw_data','test_images')
 MODELS_path = os.path.join(os.getcwd(),'raw_data','models')

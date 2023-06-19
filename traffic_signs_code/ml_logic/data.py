@@ -53,10 +53,8 @@ def create_dataset_with_split(data_path):
     This functions aims to create the dataset containing the images and their classification
     The binary classification only considers whether the sign is reconizable or not
     =========
-    Input
-    As input to this function some has to select a model, to decide whether the image has to be normalized or not
-    The default input is "Base"
-    Other inputs: "VGG"
+    Input:
+
 
     =========
     Return:
