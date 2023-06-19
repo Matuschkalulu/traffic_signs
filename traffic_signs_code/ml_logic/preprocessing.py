@@ -13,34 +13,57 @@ def shuffle_data(X,y):
 
 def train_test_preproc(X,y, test_size = 0.3, random_state = 42, model_selection = 'Base'):
     '''
+    Preprocessing of the Datasets for the Model
+
+    --> !!! Depending on the model different Inputs have to be provided !!! <--
+
     =======
-    Return
+    Input:
+    X: X-Dataset for 'Base'-Model | Train_Dataset for 'VGG'-Model
+    y: y-Dataset for 'Base'-Model | Test_Dataset for 'VGG'-Model
+    =======
+    Return:
     X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
     '''
+
     if model_selection == 'VGG':
 
-        train_size= int(len(X) *0.60)
-        val_size= train_size + int(len(X) * 0.2)
+        X_train = []
+        y_train= []
+        X_test=[]
+        y_test=[]
 
+        for feature, label in X:
+            X_train.append(feature)
+            y_train.append(label)
+        for feature, label in y:
+            X_test.append(feature)
+            y_test.append(label)
+
+        X,y = shuffle_data(X,y)
+        X_test, y_test = shuffle_data(X_test, y_test)
+
+        train_size= int(len(X) *0.80)
         X_train= X[:train_size]
         y_train= y[:train_size]
-        X_val= X[train_size:val_size]
-        y_val= y[train_size:val_size]
-        X_test= X[val_size:]
-        y_test= y[val_size:]
+
+        X_val= X[train_size:]
+        y_val= y[train_size:]
 
         X_train_preproc= preprocess_input(X_train).astype('float')
         X_val_preproc= preprocess_input(X_val).astype('float')
         X_test_preproc= preprocess_input(X_test).astype('float')
+
         y_train= y_train.astype('float')
         y_val= y_val.astype('float')
         y_test= y_test.astype('float')
 
         print("\N{white heavy check mark}" +" Data was sucessfully split and preprocessed")
-
         return X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
 
+
     if model_selection ==  'Base':
+        X,y = shuffle_data(X,y)
         X_train,X_test, y_train, y_test = train_test_split(X, y, test_size = test_size, shuffle=True)
         X_train = tensorflow.convert_to_tensor(X_train)
         X_test = tensorflow.convert_to_tensor(X_test)

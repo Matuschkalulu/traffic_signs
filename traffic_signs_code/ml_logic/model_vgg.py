@@ -52,12 +52,11 @@ def train_VGG_model(model, X, y, validation_split, batch_size, patience):
     return model, history
 
 def train_augment(model, train_flow, X_val_preproc, y_val, batch_size, patience):
-  es= tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", restore_best_weights=True,factor=0.1,patience=patience,verbose=2
-                                                      ,mode="min",min_delta=0.0001,cooldown=0,min_lr=0)
+  es= EarlyStopping(monitor="val_accuracy", mode='max', restore_best_weights=True, patience=patience, verbose=2)
 
   history = model.fit(train_flow,
                           batch_size=batch_size,
-                          epochs = 2,
+                          epochs = 50,
                           callbacks = [es],
                           validation_data = (X_val_preproc, y_val))
 
@@ -69,9 +68,7 @@ def model_VGG_evaluate(model_vgg, X, y):
 
 def predict(model_vgg, X_test_preproc, y_test):
     y_pred= np.round(model_vgg.predict(X_test_preproc))
-    target_names=['class_0', 'class_1'] # class_0= readable, class_1= unreadable
-    print(classification_report(y_test, y_pred, target_names=target_names))
-    #cm= confusion_matrix(y_test, y_pred)
+    print(classification_report(y_test, y_pred, target_names=labels))
     ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
     plt.show()
     print("\N{white heavy check mark}" + " Confusion Matrix sucessfully created")
@@ -89,9 +86,8 @@ def test_model(test_path, model_vgg):
         print("\N{white heavy check mark}" + " Successfully tested")
 
 if __name__== '__main__':
-    X, y= data.create_dataset('VGG')
-    X,y = preprocessing.shuffle_data(X,y)
-    X_train_preproc, X_val_preproc ,X_test_preproc, y_train, y_val, y_test= preprocessing.train_test_preproc(X,y, model_selection='VGG')
+    Train_data, Test_data = data.create_dataset('VGG')
+    X_train_preproc, X_val_preproc ,X_test_preproc, y_train, y_val, y_test= preprocessing.train_test_preproc(Train_data, Test_data, model_selection='VGG')
 
     model_vgg = initialize_VGG_model()
     train_flow= preprocessing.data_augment(X_train_preproc, y_train, 32)
