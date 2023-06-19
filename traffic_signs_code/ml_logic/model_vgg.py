@@ -75,7 +75,7 @@ def predict(model_vgg, X_test_preproc, y_test):
 
 def test_model(test_path, model_vgg):
     for img in os.listdir(test_path):
-        img = image.load_img(test_path + img, target_size=(IMG_HEIGHT_VGG_, IMG_WIDTH_VGG_))
+        img = image.load_img(os.path.join(test_path,  img), target_size=(IMG_HEIGHT_VGG_, IMG_WIDTH_VGG_))
         img_array = image.img_to_array(img)
         img_batch = np.expand_dims(img_array, axis=0)
         img_preprocessed = preprocess_input(img_batch)
