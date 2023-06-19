@@ -44,7 +44,7 @@ if uploaded_file is not None:
         response = requests.post(recognition_url, files=files)
 
         if response.status_code == 200:
-            # the prediction result
+            # the predictation result
             prediction = response.json()
             traffic_sign = prediction["traffic_sign"]
             confidence = prediction["confidence"]
