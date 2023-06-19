@@ -23,8 +23,8 @@ def remote_css(url):
     st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
 
 # Loading CSS
-    local_css("frontend/css/streamlit.css")
-    remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
+
+remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 uploaded_file = st.file_uploader("Choose a video...", type=["mp4", "mov", "svi", "mkv"])
 

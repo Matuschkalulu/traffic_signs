@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 
 st.title("Traffic Sign Recognition")
 st.write("Production Team by")
@@ -8,6 +9,9 @@ st.sidebar.image("https://static.vecteezy.com/system/resources/previews/009/458/
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+url_css = os.path.join(os.getcwd(), 'traffic_signs_code','interface','frontend', 'css', 'streamlit.css')
+local_css(url_css)
 
 def remote_css(url):
     st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
