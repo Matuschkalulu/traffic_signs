@@ -9,3 +9,4 @@ IMG_WIDTH_BASE = 100
 IMG_HEIGHT_BASE = 100
 IMG_WIDTH_VGG= 224
 IMG_HEIGHT_VGG = 224
+LOCAL_MODEL_PATH= os.path.join(os.getcwd(),'models')
