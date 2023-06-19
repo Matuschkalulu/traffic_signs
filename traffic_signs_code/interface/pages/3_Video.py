@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 
 # for the Streamlit interface
 st.title("Traffic Sign Recognition")
