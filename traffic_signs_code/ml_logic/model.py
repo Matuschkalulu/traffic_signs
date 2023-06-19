@@ -9,8 +9,7 @@ from colorama import Fore, Style
 from sklearn.metrics import classification_report
 from sklearn.utils import shuffle
 import os, cv2, glob
-
-from traffic_signs_code import params
+from traffic_signs_code.params import *
 from traffic_signs_code.ml_logic import data , preprocessing
 #End of Import
 
