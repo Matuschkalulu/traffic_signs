@@ -22,3 +22,10 @@ run_packages_from_base:
 #direnv allow .
 #direnv reload .
 #echo $GOOGLE_APPLICATION_CREDENTIALS
+
+create_dirs:
+	mkdir raw_data
+	mkdir raw_data/Train
+	mkdir raw_data/Train/unreadable
+	mkdir raw_data/Train/readable
+	mkdir raw_data/split_data
