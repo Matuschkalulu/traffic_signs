@@ -14,5 +14,6 @@ def remote_css(url):
     st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
 
 # Loading CSS
-local_css("frontend/css/streamlit.css")
+url_css = os.path.join(os.getcwd(), 'traffic_signs_code','interface','frontend', 'css', 'streamlit.css')
+local_css(url_css)
 remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
