@@ -27,12 +27,9 @@ def create_dataset(model_selected = 'Base'):
     img_data_array = []
     class_name = []
 
-    if model_selected == 'Base':
-        IMG_HEIGHT = IMG_HEIGHT_BASE
-        IMG_WIDTH = IMG_WIDTH_BASE
-    else :
-        IMG_HEIGHT = IMG_HEIGHT_VGG
-        IMG_WIDTH = IMG_WIDTH_VGG
+
+    IMG_HEIGHT = IMG_HEIGHT_VGG
+    IMG_WIDTH = IMG_WIDTH_VGG
 
     for dir1 in os.listdir(img_folder):
         for file in os.listdir(os.path.join(img_folder, dir1)):
@@ -54,30 +51,38 @@ def create_dataset_with_split(data_path):
     The binary classification only considers whether the sign is reconizable or not
     =========
     Input:
-
+    Data_path of either the test or train data created by the splitfolders() function
 
     =========
-    Return:
-    The function returns an array containing all the images and the class names
-        image_data_array : will be used as the feature parametes for the model
-        class_name: will be used as the bases for the target
+    Return: -> np.array
+    Returns a numpy array with the images an their labels
     '''
 
     splitfolders.ratio(IMG_PATH, output= SPLIT_PATH, seed=1337, ratio=(0.8,0.0,0.2))
-    shutil.rmtree.remove(SPLIT_PATH + '/val')
+    shutil.rmtree(SPLIT_PATH + '/val')
     img_data_array=[]
     for label in LABELS:
         image_path= os.path.join(data_path, label)
         class_num = LABELS.index(label)
         for img in os.listdir(image_path):
-            image= cv2.imread(os.path.join(image_path, img), cv2.COLOR_BGR2RGB)
-            image=cv2.resize(image, (IMG_HEIGHT_VGG_, IMG_WIDTH_VGG_))
-            img_data_array.append([image, class_num])
+            if img.endswith('.png') or  img.endswith('.jpg'):
+                image= cv2.imread(os.path.join(image_path, img), cv2.COLOR_BGR2RGB)
+                image=cv2.resize(image, (IMG_HEIGHT_VGG_, IMG_WIDTH_VGG_))
+                img_data_array.append([image, class_num])
+    print("\N{white heavy check mark}" +" Data was sucessfully created and splitted into Train and Test Folder")
     return np.array(img_data_array)
 
 # Function to crop data
-def crop_images(model_name):
-    custom_model = YOLO(os.path.join(MODELS_path,model_name))
+def crop_images(model_name = 'yolo_v2.pt'):
+    """
+    Crops out the traffic signs via YOLO detection to push it to the classification model:
+    =======
+    Input :
+    model_name : The model hast to be called by its name to make the prediction. A default is set.
+    ======
+    Return: None -> Funcitons save the croped image in a directory
+    """
+    custom_model = YOLO(os.path.join(MODELS_PATH,model_name))
     img_path= IMG_PATH
     img_list=[]
     for current_dir, dirs, files in os.walk(img_path):
@@ -98,7 +103,7 @@ def crop_images(model_name):
                         crop_img= img[y_min:y_min+int(box_height), x_min:x_min+int(box_width)]
                         #plt.imshow(crop_img)
                         #plt.show();
-                        save_path= Crop_path
+                        save_path= CROP_PATH
                         if not os.path.exists(save_path):
                             os.makedirs(save_path)
                         cv2.imwrite(save_path + f"{f}", crop_img)

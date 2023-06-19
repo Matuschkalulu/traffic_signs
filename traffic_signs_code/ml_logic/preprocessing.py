@@ -11,70 +11,54 @@ def shuffle_data(X,y):
     y= np.array(y)
     return X,y
 
-def train_test_preproc(X,y, test_size = 0.3, random_state = 42, model_selection = 'Base'):
+def train_test_preproc(Train_data, Test_data):
     '''
     Preprocessing of the Datasets for the Model
 
-    --> !!! Depending on the model different Inputs have to be provided !!! <--
-
     =======
     Input:
-    X: X-Dataset for 'Base'-Model | Train_Dataset for 'VGG'-Model
-    y: y-Dataset for 'Base'-Model | Test_Dataset for 'VGG'-Model
+    Train_data: Train_Dataset for 'VGG'-Model
+    Test_data : Test_Dataset for 'VGG'-Model
+
     =======
     Return:
     X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
     '''
 
-    if model_selection == 'VGG':
+    X = []
+    y = []
+    X_test=[]
+    y_test=[]
 
-        X_train = []
-        y_train= []
-        X_test=[]
-        y_test=[]
+    for feature, label in Train_data:
+        X.append(feature)
+        y.append(label)
+    for feature, label in Test_data:
+        X_test.append(feature)
+        y_test.append(label)
 
-        for feature, label in X:
-            X_train.append(feature)
-            y_train.append(label)
-        for feature, label in y:
-            X_test.append(feature)
-            y_test.append(label)
+    X,y = shuffle_data(X,y)
+    X_test, y_test = shuffle_data(X_test, y_test)
 
-        X,y = shuffle_data(X,y)
-        X_test, y_test = shuffle_data(X_test, y_test)
+    train_size= int(len(X) *0.80)
+    X_train= X[:train_size]
+    y_train= y[:train_size]
 
-        train_size= int(len(X) *0.80)
-        X_train= X[:train_size]
-        y_train= y[:train_size]
+    X_val= X[train_size:]
+    y_val= y[train_size:]
 
-        X_val= X[train_size:]
-        y_val= y[train_size:]
+    X_train_preproc= preprocess_input(X_train).astype('float')
+    X_val_preproc= preprocess_input(X_val).astype('float')
+    X_test_preproc= preprocess_input(X_test).astype('float')
 
-        X_train_preproc= preprocess_input(X_train).astype('float')
-        X_val_preproc= preprocess_input(X_val).astype('float')
-        X_test_preproc= preprocess_input(X_test).astype('float')
+    y_train= y_train.astype('float')
+    y_val= y_val.astype('float')
+    y_test= y_test.astype('float')
 
-        y_train= y_train.astype('float')
-        y_val= y_val.astype('float')
-        y_test= y_test.astype('float')
-
-        print("\N{white heavy check mark}" +" Data was sucessfully split and preprocessed")
-        return X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
+    print("\N{white heavy check mark}" +" Data was sucessfully split additionally into Validation Set and was preprocessed")
+    return X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
 
 
-    if model_selection ==  'Base':
-        X,y = shuffle_data(X,y)
-        X_train,X_test, y_train, y_test = train_test_split(X, y, test_size = test_size, shuffle=True)
-        X_train = tensorflow.convert_to_tensor(X_train)
-        X_test = tensorflow.convert_to_tensor(X_test)
-        y_train = np.array(y_train).astype(int)
-        y_test = np.array(y_test).astype(int)
-        X_train /= 255.
-        X_test /= 255.
-
-        print("\N{white heavy check mark}" +" Data was sucessfully split and preprocessed")
-
-        return X_train, X_test, y_train, y_test
 
 def data_augment(X_train_preproc, y_train, batch_size):
 
