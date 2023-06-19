@@ -6,7 +6,7 @@ from PIL import Image
 st.title("Traffic Sign Recognition")
 st.write("Identifie traffic signs in images.")
 
-st.sidebar.image("https://static.vecteezy.com/system/resources/previews/009/458/871/original/traffic-signs-icon-logo-design-template-vector.jpg", width=100)
+st.sidebar.image("https://static.vecteezy.com/system/resources/previews/002/388/506/non_2x/concept-design-with-traffic-signs-vector.jpg", width=250)
 
 def local_css(file_name):
     with open(file_name) as f:
@@ -27,11 +27,15 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 st.markdown('<style>...</style>', unsafe_allow_html=True)
 
-
 if uploaded_file is not None:
     # displaying the uploaded image
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+
+    st.header("Traffic sign that you want")
+
+    with st.columns(1)[0]:
+     st.image(image, caption="Uploaded Image", use_column_width=True)
+
 
     # making a prediction
     if st.button("Classify"):

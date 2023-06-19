@@ -3,7 +3,7 @@ import streamlit as st
 st.title("Traffic Sign Recognition")
 st.write("Production Team by")
 
-st.sidebar.image("https://static.vecteezy.com/system/resources/previews/009/458/871/original/traffic-signs-icon-logo-design-template-vector.jpg", width=100)
+st.sidebar.image("https://static.vecteezy.com/system/resources/previews/002/388/506/non_2x/concept-design-with-traffic-signs-vector.jpg", width=250)
 
 def local_css(file_name):
     with open(file_name) as f:
