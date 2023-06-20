@@ -5,7 +5,7 @@ import os
 
 # for the Streamlit interface
 st.title("Traffic Sign Recognition")
-st.write("Identifie traffic signs in images.")
+st.write("Identify traffic signs in images.")
 
 st.sidebar.image("https://static.vecteezy.com/system/resources/previews/009/458/871/original/traffic-signs-icon-logo-design-template-vector.jpg", width=100)
 
