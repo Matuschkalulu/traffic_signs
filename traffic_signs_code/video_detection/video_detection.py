@@ -34,7 +34,7 @@ def pred(crop_list, model):
     class_list=[]
     score_list=[]
     for arr in crop_list:
-        image= cv2.resize(arr, (IMG_WIDTH_VGG, IMG_HEIGHT_VGG), interpolation = cv2.INTER_AREA)
+        image= cv2.resize(arr, (IMG_WIDTH_VGG_, IMG_HEIGHT_VGG_), interpolation = cv2.INTER_AREA)
         image= np.expand_dims(image, axis=0)
         img_preprocessed = preprocess_input(image)
         score= model.predict(img_preprocessed)[0][0]
@@ -64,11 +64,17 @@ def visualize_pred(file, img, cord_list, class_list):
         plt.title('Image with Traffic Signs', fontsize=18)
         plt.show()
         # Saving the plot
-        fig.savefig(Image_output_path)
+        fig.savefig(IMG_OUTPUT_PATH)
         plt.close()
 
-def process_video(file):
-    custom_model = YOLO(Yolo_Model_path)
+def process_video(file, model_name= 'yolo_v2.pt'):
+    """
+    =======
+    Input:
+    file: Video file to process
+    model_name: which model will be used for the calssification
+    """
+    custom_model = YOLO(os.path.join(MODELS_PATH, model_name))
     video = cv2.VideoCapture(file)
     writer = None
     h, w = None, None
