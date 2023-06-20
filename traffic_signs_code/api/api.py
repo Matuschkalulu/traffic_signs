@@ -33,13 +33,17 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+app.state.model= load_model()
 
 @app.post("/ImagePrediction/")
 async def create_prediction(file: UploadFile = File(...)):
     contents = await file.read()
     np_array = np.frombuffer(contents, np.uint8)
     pred_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
-    results = custom_model(pred_image)
+
+    custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'best_v2.pt'))
+    results = custom_model(pred_image, device='cpu')
+
     pred_list=[]
     class_list=[]
     for n, box in enumerate(results[0].boxes.xywhn):
@@ -67,7 +71,7 @@ async def create_prediction(file: UploadFile = File(...)):
             #return {"Value": [float(y_pred), class_current]}
 
         class_list.append(class_current)
-    return {'pred': class_list}
+    return {'Value': class_list, 'Actual Prediction Value': [float(i) for i in pred_list]}
 
 @app.post("/VideoPrediction/")
 async def video_prediction(file: UploadFile = File(...)):
