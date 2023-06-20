@@ -21,5 +21,6 @@ def load_model():
     print(Fore.BLUE + f"\n{most_recent_model_path_on_disk}" + Style.RESET_ALL)
     print(Fore.BLUE + f"\nLoad latest model from disk..." + Style.RESET_ALL)
     latest_model = keras.models.load_model(most_recent_model_path_on_disk, compile=False)
+    latest_model.compile()
     print(":white_check_mark: Model loaded from local disk")
     return latest_model
