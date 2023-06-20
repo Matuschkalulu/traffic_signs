@@ -25,4 +25,4 @@ streamlit
 split-folders
 ultralytics
 shutil
-
+python-multipart
