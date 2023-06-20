@@ -3,7 +3,7 @@ matplotlib
 opencv-python
 glob2
 requests
-beautifulsoup4
+#beautifulsoup4
 pytest-shutil
 random2
 selenium
@@ -18,10 +18,11 @@ fastapi
 pytz
 uvicorn
 httpx
-pytest-asyncio
+#pytest-asyncio
 python-dotenv
 #protobuf==3.20.1
 streamlit
 split-folders
 ultralytics
 shutil
+
