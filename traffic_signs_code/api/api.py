@@ -41,14 +41,17 @@ async def create_prediction(file: UploadFile = File(...)):
     img_preprocessed = preprocess_input(image)
     print("Preprocessed Image", img_preprocessed.shape)
 
-    model=load_model()
+    app = FastAPI()
+    app.state.model= load_model()
     print("Model Loaded")
-    model.compile(loss='binary_crossentropy',
+    app.state.model.compile(loss='binary_crossentropy',
                   optimizer ='adam',
                   metrics=['accuracy'])
+
     print("Model Compile Done")
-    y_pred= model.predict(img_preprocessed)
+    y_pred= app.state.model.predict(img_preprocessed)
     print(y_pred)
+
     if y_pred.astype('float32') > 0.4:
         print(Fore.YELLOW + f"\nThis is an unrecognizable sign with a prediction value: {y_pred}" + Style.RESET_ALL)
         return {"Value": float(y_pred)}
