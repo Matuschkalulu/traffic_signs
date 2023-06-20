@@ -13,6 +13,7 @@ def load_model():
     """
 
     # Get the latest model version name by the timestamp on disk
+
     local_model_directory = os.path.join(LOCAL_MODEL_PATH, 'first_model')
     local_model_paths = glob.glob(f"{local_model_directory}/*")
     if not local_model_paths:
