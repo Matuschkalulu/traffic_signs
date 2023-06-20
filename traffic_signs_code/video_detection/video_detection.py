@@ -48,7 +48,7 @@ def pred(crop_list, model):
     return score_list, class_list
 
 # Visualize the image with detected and recognized signs
-def visualize_pred(file, img, cord_list, class_list):
+def visualize_pred(file,  img, cord_list, class_list):
     for (c,i) in zip(cord_list, class_list):
         x_min, y_min= c[0], c[1]
         box_width, box_height= c[2], c[3]
@@ -62,10 +62,12 @@ def visualize_pred(file, img, cord_list, class_list):
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         plt.axis('off')
         plt.title('Image with Traffic Signs', fontsize=18)
-        plt.show()
+        #plt.show()
         # Saving the plot
-        fig.savefig(IMG_OUTPUT_PATH)
-        plt.close()
+        fig.savefig(os.path.join(os.getcwd(), 'image0.png'))
+        cv2.imwrite(os.path.join(os.getcwd(), 'image0.png'), img)
+        #plt.close()
+    return img
 
 def process_video(file, model_name= 'yolo_v2.pt'):
     """
