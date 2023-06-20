@@ -17,7 +17,7 @@ IMG_HEIGHT_VGG = 224
 IMG_WIDTH_VGG_= 160
 IMG_HEIGHT_VGG_ = 160
 
-LOCAL_MODEL_PATH= os.path.join(os.getcwd(),'models')
+LOCAL_MODEL_PATH= os.path.join(os.getcwd(),'raw_data','models')
 
 
 
