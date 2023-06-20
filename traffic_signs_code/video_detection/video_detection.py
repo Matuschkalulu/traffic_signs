@@ -10,9 +10,11 @@ from traffic_signs_code.ml_logic.registry import load_model
 from IPython import display
 from IPython.display import FileLink
 
+custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'yolo_v2.pt'))
+model= load_model()
+
 # Detect and Recognize images
 def process_image(model, file):
-    custom_model = YOLO(Yolo_Model_path)
     img = cv2.imread(file, cv2.IMREAD_COLOR)
     h, w = img.shape[:2]
     results = custom_model(img)
@@ -69,20 +71,18 @@ def visualize_pred(file,  img, cord_list, class_list):
         #plt.close()
     return img
 
-def process_video(file, model_name= 'yolo_v2.pt'):
+def process_video(file, model):
     """
     =======
     Input:
     file: Video file to process
     model_name: which model will be used for the calssification
     """
-    custom_model = YOLO(os.path.join(MODELS_PATH, model_name))
     video = cv2.VideoCapture(file)
     writer = None
     h, w = None, None
     f = 0
     t = 0
-    model= load_model()
     # Catching frames in the loop
     score_list=[]
     while True:
@@ -112,7 +112,7 @@ def process_video(file, model_name= 'yolo_v2.pt'):
             cord_list.append([x_min, y_min, box_width, box_height])
 
         score_list, class_list= pred(crop_list, model)
-        visualize_pred(file, frame, cord_list, class_list)
+        #visualize_pred(file, frame, cord_list, class_list)
         if writer is None:
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             writer = cv2.VideoWriter(Video_output_path, fourcc, 25,
@@ -129,7 +129,6 @@ def process_video(file, model_name= 'yolo_v2.pt'):
     return score_list, class_list
 
 if __name__== '__main__':
-    model=load_model()
     file= Test_video_path
     if file.endswith(tuple(['.png', '.jpg', '.jpeg'])):
         img, crop_list, cord_list=process_image(model, file)
