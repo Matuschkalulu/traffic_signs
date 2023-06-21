@@ -1,28 +1,26 @@
 colorama
-matplotlib
+#matplotlib
 opencv-python
-glob2
+#glob2
 requests
 #beautifulsoup4
 pytest-shutil
-random2
-selenium
-webdriver_manager
+#selenium
+#webdriver_manager
 scikit-learn==1.2.1
-keras==2.10.0
+#keras==2.10.0
 Cython
 numpy==1.23.5
 pandas==1.5.3
-tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
+#tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
 fastapi
-pytz
+#pytz
 uvicorn
 httpx
 #pytest-asyncio
 python-dotenv
 #protobuf==3.20.1
-streamlit
+#streamlit
 split-folders
 ultralytics
-shutil
 python-multipart
