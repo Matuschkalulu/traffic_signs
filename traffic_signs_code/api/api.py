@@ -15,9 +15,8 @@ from traffic_signs_code.params import *
 import matplotlib.pyplot as plt
 from PIL import Image
 import io
+custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'best_v2.pt'))
 
-
-custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'yolo_v2.pt'))
 app = FastAPI()
 
 # Allowing all middleware is optional, but good practice for dev purposes
@@ -40,6 +39,7 @@ async def create_prediction(file: UploadFile = File(...)):
     class_list=[]
     crop_list=[]
     cord_list=[]
+
     for n, box in enumerate(results[0].boxes.xywhn):
         h, w = pred_image.shape[:2]
         x1, y1, x2, y2 = box.numpy()
@@ -51,7 +51,9 @@ async def create_prediction(file: UploadFile = File(...)):
         crop_list.append(crop_img)
         cord_list.append([x_min, y_min, box_width, box_height])
 
+
         image=cv2.resize(crop_img, (IMG_WIDTH_VGG_, IMG_HEIGHT_VGG_),interpolation = cv2.INTER_AREA)
+
         image = np.expand_dims(image,axis = 0)
         img_preprocessed = preprocess_input(image)
         print("Preprocessed Image", img_preprocessed.shape)
@@ -73,18 +75,28 @@ async def create_prediction(file: UploadFile = File(...)):
         cv2.putText(pred_image,i, (x_min, y_min - 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0,0,255), 2)
 
     image = cv2.imwrite(os.path.join(os.getcwd(), 'output_image.png'), pred_image)
+
     headers = {
         "Content-Disposition": "attachment; filename=output_image.png",
         "Content-Type": "image/png",
     }
+
     labeled_image_path = os.path.join(os.getcwd(), 'output_image.png')
     with open(labeled_image_path, "rb") as f:
         file_content = f.read()
     response = Response(content=file_content,headers=headers)
     return response
 
+
 @app.post("/VideoPrediction/")
 async def video_prediction(file: UploadFile = File(...)):
+
+    app.state.model= load_model()
+    app.state.model.compile(loss='binary_crossentropy',
+                    optimizer ='adam',
+                    metrics=['accuracy'])
+
+
     with open('test_video.mp4', "wb") as buffer:
         buffer.write(await file.read())
 
@@ -159,6 +171,7 @@ async def video_prediction(file: UploadFile = File(...)):
         file_content = f.read()
     response = Response(content=file_content,headers=headers)
     return response
+
 
 @app.get("/")
 def root():
