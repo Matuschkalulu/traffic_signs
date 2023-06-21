@@ -19,9 +19,9 @@ from traffic_signs_code.params import *
 import matplotlib.pyplot as plt
 from PIL import Image
 import io
-import ipdb
+from starlette.responses import Response
 
-custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'yolo_v2.pt'))
+custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'best_v2.pt'))
 
 app = FastAPI()
 
@@ -41,11 +41,13 @@ async def create_prediction(file: UploadFile = File(...)):
     np_array = np.frombuffer(contents, np.uint8)
     pred_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
 
-    custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'best_v2.pt'))
+
     results = custom_model(pred_image, device='cpu')
 
     pred_list=[]
     class_list=[]
+    crop_list = []
+    cord_list = []
     for n, box in enumerate(results[0].boxes.xywhn):
         h, w = pred_image.shape[:2]
         x1, y1, x2, y2 = box.numpy()
@@ -54,6 +56,8 @@ async def create_prediction(file: UploadFile = File(...)):
         x_min = int(x_center - (box_width / 2))
         y_min = int(y_center - (box_height / 2))
         crop_img= pred_image[y_min:y_min+int(box_height), x_min:x_min+int(box_width)]
+        crop_list.append(crop_img)
+        cord_list.append([x_min, y_min, box_width, box_height])
         image=cv2.resize(crop_img, (160, 160),interpolation = cv2.INTER_AREA)
         image = np.expand_dims(image,axis = 0)
         img_preprocessed = preprocess_input(image)
@@ -71,11 +75,27 @@ async def create_prediction(file: UploadFile = File(...)):
             #return {"Value": [float(y_pred), class_current]}
 
         class_list.append(class_current)
-    return {'Value': class_list, 'Actual Prediction Value': [float(i) for i in pred_list]}
+    for (c,i) in zip(cord_list, class_list):
+        x_min, y_min= c[0], c[1]
+        box_width, box_height= c[2], c[3]
+        cv2.rectangle(pred_image, (x_min, y_min), (x_min + box_width, y_min + box_height), (0 , 255, 0), 2)
+        cv2.putText(pred_image,i, (x_min, y_min - 5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0,0,255), 2)
+    headers = {
+        "Content-Disposition": "attachment; filename=output_image.png",
+        "Content-Type": "image/png",
+    }
+    image = cv2.imwrite(os.path.join(os.getcwd(), 'output_image.png'), pred_image)
+    labeled_image_path = os.path.join(os.getcwd(), 'output_image.png')
+    with open(labeled_image_path, "rb") as f:
+        file_content = f.read()
+    response = Response(content=file_content,headers=headers)
+    #return {'pred': [float(i) for i in score_list], 'video':  response}
+    return response
+
 
 @app.post("/VideoPrediction/")
 async def video_prediction(file: UploadFile = File(...)):
-    custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'yolo_v2.pt'))
+
     app.state.model= load_model()
     app.state.model.compile(loss='binary_crossentropy',
                     optimizer ='adam',
@@ -102,7 +122,7 @@ async def video_prediction(file: UploadFile = File(...)):
         if w is None or h is None:
             h, w = frame.shape[:2]
         start= time.time()
-        results= custom_model(frame)
+        results= custom_model(frame, device='cpu')
         end= time.time()
         f += 1
         t += end - start
@@ -146,8 +166,16 @@ async def video_prediction(file: UploadFile = File(...)):
     print('FPS:', round((f / t), 1))
     video.release()
     writer.release()
-    return {'pred': [float(i) for i in score_list]}
-
+    headers = {
+        "Content-Disposition": "attachment; filename=output_video.mp4",
+        "Content-Type": "video/mp4",
+    }
+    labeled_video_path = os.path.join(os.getcwd(), 'output_video.mp4')
+    with open(labeled_video_path, "rb") as f:
+        file_content = f.read()
+    response = Response(content=file_content,headers=headers)
+    #return {'pred': [float(i) for i in score_list], 'video':  response}
+    return response
     #score_list, class_list= process_video(main_video_path, app.state.model)
     #return {'pred': zip(score_list, class_list)}
 
