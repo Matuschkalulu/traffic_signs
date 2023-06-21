@@ -17,7 +17,7 @@ model= load_model()
 def process_image(model, file):
     img = cv2.imread(file, cv2.IMREAD_COLOR)
     h, w = img.shape[:2]
-    results = custom_model(img)
+    results = custom_model(img, device='cpu')
     crop_list=[]
     cord_list=[]
     for n, box in enumerate(results[0].boxes.xywhn):
@@ -92,7 +92,7 @@ def process_video(file, model):
         if w is None or h is None:
             h, w = frame.shape[:2]
         start= time.time()
-        results= custom_model(frame)
+        results= custom_model(frame, device='cpu')
         end= time.time()
         f += 1
         t += end - start
@@ -112,13 +112,18 @@ def process_video(file, model):
             cord_list.append([x_min, y_min, box_width, box_height])
 
         score_list, class_list= pred(crop_list, model)
-        #visualize_pred(file, frame, cord_list, class_list)
+        visualize_pred(file, frame, cord_list, class_list)
+        for score in score_list:
+            if score < 0.6:
+                    class_current= 'READABLE'
+            else:
+                class_current= 'UNREADABLE'
+            class_list.append(class_current)
         if writer is None:
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             writer = cv2.VideoWriter(Video_output_path, fourcc, 25,
                                      (frame.shape[1], frame.shape[0]), True)
         writer.write(frame)
-
     print('Total number of frames', f)
     print('Total amount of time {:.5f} seconds'.format(t))
     print('FPS:', round((f / t), 1))
