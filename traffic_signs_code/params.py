@@ -15,12 +15,12 @@ IMG_HEIGHT_VGG = 224
 IMG_WIDTH_VGG_= 160
 IMG_HEIGHT_VGG_ = 160
 
-LOCAL_MODEL_PATH= os.path.join(os.getcwd(),'raw_data','models')
+LOCAL_MODEL_PATH= os.path.join(os.getcwd(),'raw_data','models', 'final_model')
 
 VGG_Model_path = os.path.join(os.getcwd(),'raw_data','models', 'model.h5')
 Test_Image_path= os.path.join(os.getcwd(),'raw_data','test_images', '00007.jpg')
 Street_Image_path= os.path.join(os.getcwd(),'raw_data','street_images', '00001.jpg')
 Test_video_path= os.path.join(os.getcwd(),'raw_data','test_videos', 'video_1.mp4')
-Video_output_path= os.path.join(os.getcwd(), 'output_video.mp4')
-IMG_OUTPUT_PATH= os.path.join(os.getcwd(),'output_image.png')
-Fig_OUTPUT_PATH= os.path.join(os.getcwd(),'output_fig.png')
+Video_output_path= os.path.join(os.getcwd(), 'raw_data', 'output_dir', 'output_video.mp4')
+IMG_OUTPUT_PATH= os.path.join(os.getcwd(),'raw_data', 'output_dir', 'output_image.png')
+Fig_OUTPUT_PATH= os.path.join(os.getcwd(),'raw_data', 'output_dir', 'output_fig.png')
