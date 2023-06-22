@@ -8,3 +8,5 @@ raw_data
 __pycache__
 yolov3.weights
 
+build/
+traffic_signs_code.egg-info
