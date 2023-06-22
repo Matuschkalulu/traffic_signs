@@ -11,7 +11,7 @@ from traffic_signs_code.params import *
 from traffic_signs_code.ml_logic.miscfunc import load_model
 
 
-custom_model = YOLO(os.path.join(LOCAL_MODEL_PATH, 'best_v2.pt'))
+custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'best_v2.pt'))
 model= load_model()
 
 # Detect and Recognize images
@@ -58,7 +58,7 @@ def visualize_pred(img, cord_list, class_list, plot=True):
         box_width, box_height= c[2], c[3]
         cv2.rectangle(img, (x_min, y_min), (x_min + box_width, y_min + box_height), (0 , 255, 0), 2)
         cv2.putText(img, i, (x_min, y_min - 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0,0,255), 2)
-    cv2.imwrite(IMG_OUTPUT_PATH, img)
+    cv2.imwrite(os.path.join(OUTPUT_PATH, 'output_image.png'), img)
     if plot:
         # Plotting the test image
         plt.rcParams['figure.figsize'] = (15, 15)
@@ -68,7 +68,7 @@ def visualize_pred(img, cord_list, class_list, plot=True):
         plt.title('Image with Traffic Signs', fontsize=18)
         plt.show()
         # Saving the plot
-        fig.savefig(Fig_OUTPUT_PATH)
+        fig.savefig(os.path.join(OUTPUT_PATH, 'output_fig.png'))
         plt.close()
 
 def process_video(file, model):
@@ -101,7 +101,7 @@ def process_video(file, model):
 
         if writer is None:
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            writer = cv2.VideoWriter(Video_output_path, fourcc, 25,
+            writer = cv2.VideoWriter(os.path.join(OUTPUT_PATH,'output_video.mp4'), fourcc, 25,
                                      (frame.shape[1], frame.shape[0]), True)
         writer.write(frame)
     print('Total number of frames', f)
