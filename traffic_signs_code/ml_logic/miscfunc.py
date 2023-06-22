@@ -12,11 +12,11 @@ def load_model():
     Return a saved model:
     Return None (but do not Raise) if no model is found
     """
-    local_model_directory = os.path.join(LOCAL_MODEL_PATH, 'first_model')
+    local_model_directory = os.path.join(LOCAL_MODEL_PATH, 'first_model', 'improved_model_resnet_99.h5')
     local_model_paths = glob.glob(f"{local_model_directory}/*")
-    
+
     print(Fore.BLUE + f"\nLoad latest model from disk..." + Style.RESET_ALL)
-    latest_model = tf.keras.models.load_model(local_model_paths, compile=False)
+    latest_model = tf.keras.models.load_model(local_model_directory, compile=False)
     latest_model.compile(loss='binary_crossentropy',
                 optimizer = Adam(learning_rate= 1e-4),
                 metrics=['accuracy'])
