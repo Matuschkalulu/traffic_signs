@@ -3,3 +3,4 @@ raw_data
 .python-version
 __pycache__
 notebooks
+.idea
