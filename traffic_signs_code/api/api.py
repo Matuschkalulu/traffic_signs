@@ -25,7 +25,7 @@ async def create_prediction(file: UploadFile = File(...)):
     pred_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
     crop_list, cord_list= process_file(pred_image)
     pred_list, class_list= pred(crop_list, model)
-    visualize_pred(pred_image, cord_list, class_list, plot=False)
+    visualize_pred(pred_image, cord_list, class_list, plot=False, save=True)
 
     headers = {
         "Content-Disposition": "attachment; filename=output_image.png",
