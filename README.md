@@ -22,5 +22,8 @@ In this project we didn't have unrecognizable images at hand. Therefore, we had 
 
 ## Modeling
 We tried different CNN architectures. We began with a base model and got a base score. Then, we moved to transfer learning. We started with VGG16	which was a bit underfitting the task. We then used a more complex residual net structure; Resnet50 which performed much better. Since we didn't have a large dataset, we applied different techniques of data augmentation to both the samples and the model layers. We achieved a test score of 99% on unseen test dataset with Resnet50.
+![history_resnet](https://github.com/Matuschkalulu/traffic_signs/assets/107108097/8a5b076c-8bbc-4abc-bff6-041bbd7fc21c)
 
-file:///home/maly/Downloads/history_resnet.png
+
+![classification_report](https://github.com/Matuschkalulu/traffic_signs/assets/107108097/d6574314-7fee-4c6f-8e4b-7b3b2a590907)
+
