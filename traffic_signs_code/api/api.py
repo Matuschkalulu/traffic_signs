@@ -4,7 +4,7 @@ from traffic_signs_code.ml_logic.miscfunc import load_model
 from traffic_signs_code.params import *
 from traffic_signs_code.video_detection.video_detection import *
 
-custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'best_v2.pt'))
+custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'yolo_v2.pt'))
 app = FastAPI()
 
 # Allowing all middleware is optional, but good practice for dev purposes
