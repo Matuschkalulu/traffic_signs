@@ -10,3 +10,6 @@ yolov3.weights
 
 build/
 traffic_signs_code.egg-info
+final_modeling.ipynb
+raw_data/input_dir
+raw_data/output_dir
