@@ -11,7 +11,7 @@ from traffic_signs_code.params import *
 from traffic_signs_code.ml_logic.miscfunc import load_model
 
 
-custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'best_v2.pt'))
+custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'yolo_v2.pt'))
 model= load_model()
 
 # Detect and Recognize images
