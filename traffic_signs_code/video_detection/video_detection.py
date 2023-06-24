@@ -4,8 +4,6 @@ from ultralytics import YOLO
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2, os, time
-from tensorflow import keras
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.resnet50 import preprocess_input
 from traffic_signs_code.params import *
 from traffic_signs_code.ml_logic.miscfunc import load_model
