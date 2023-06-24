@@ -52,18 +52,19 @@ def pred(crop_list, model):
     return score_list, class_list
 
 # Visualize the image with detected and recognized signs
-def visualize_pred(img, cord_list, class_list, plot=True):
+def visualize_pred(file, cord_list, class_list, plot=True, save=True):
     for (c,i) in zip(cord_list, class_list):
         x_min, y_min= c[0], c[1]
         box_width, box_height= c[2], c[3]
-        cv2.rectangle(img, (x_min, y_min), (x_min + box_width, y_min + box_height), (0 , 255, 0), 2)
-        cv2.putText(img, i, (x_min, y_min - 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0,0,255), 2)
-    cv2.imwrite(os.path.join(OUTPUT_PATH, 'output_image.png'), img)
+        cv2.rectangle(file, (x_min, y_min), (x_min + box_width, y_min + box_height), (0 , 255, 0), 2)
+        cv2.putText(file, i, (x_min, y_min - 5), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0,0,255), 2)
+    if save:
+        cv2.imwrite(os.path.join(OUTPUT_PATH, 'output_image.png'), file)
     if plot:
         # Plotting the test image
         plt.rcParams['figure.figsize'] = (15, 15)
         fig = plt.figure()
-        plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        plt.imshow(cv2.cvtColor(file, cv2.COLOR_BGR2RGB))
         plt.axis('off')
         plt.title('Image with Traffic Signs', fontsize=18)
         plt.show()
@@ -97,7 +98,7 @@ def process_video(file, model):
         t += end - start
         print('Frame number {0} took {1:.5f} seconds'.format(f, end - start))
         score_list, class_list= pred(crop_list, model)
-        visualize_pred(frame, cord_list, class_list, plot=False)
+        visualize_pred(frame, cord_list, class_list, plot=False, save=False)
 
         if writer is None:
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
