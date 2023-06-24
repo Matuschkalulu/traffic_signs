@@ -10,7 +10,8 @@ from traffic_signs_code.ml_logic.miscfunc import load_model
 
 
 custom_model = YOLO(os.path.join(YOLO_MODEL_PATH, 'yolo_v2.pt'))
-model= load_model()
+model_path= os.path.join(LOCAL_MODEL_PATH, 'improved_model_resnet_99.h5')
+model= load_model(model_path)
 
 # Detect and Recognize images
 def process_file(file):
@@ -110,3 +111,14 @@ def process_video(file, model):
     # Releasing video reader and writer
     video.release()
     writer.release()
+
+if __name__== '__main__':
+    #file= os.path.join(INPUT_PATH, 'test_video.mp4')
+    file= os.path.join(INPUT_PATH, 'test_str.jpg')
+    if file.endswith(tuple(['.png', '.jpg', '.jpeg'])):
+        img = cv2.imread(file, cv2.IMREAD_COLOR)
+        crop_list, cord_list=process_file(img)
+        score_list, class_list= pred(crop_list, model)
+        visualize_pred(img, cord_list, class_list, plot=True, save=True)
+    else:
+        process_video(file, model)
