@@ -1,8 +1,8 @@
-from sklearn.model_selection import train_test_split
+from colorama import Fore, Style
 from sklearn.utils import shuffle
 import numpy as np
-import tensorflow
-from tensorflow.keras.applications.vgg16 import preprocess_input
+import tensorflow as tf
+from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 def shuffle_data(X,y):
@@ -24,7 +24,7 @@ def train_test_preproc(Train_data, Test_data):
     Return:
     X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
     '''
-
+    print(Fore.BLUE + "\nStart of data processing..." + Style.RESET_ALL)
     X = []
     y = []
     X_test=[]
@@ -55,23 +55,21 @@ def train_test_preproc(Train_data, Test_data):
     y_val= y_val.astype('float')
     y_test= y_test.astype('float')
 
-    print("\N{white heavy check mark}" +" Data was sucessfully split additionally into Validation Set and was preprocessed")
+    print("\n✅ Data was sucessfully split additionally into Validation Set and was preprocessed")
     return X_train_preproc, X_val_preproc, X_test_preproc, y_train, y_val, y_test
-
-
 
 def data_augment(X_train_preproc, y_train, batch_size):
 
     def custom_augmentation(np_tensor):
 
         def random_contrast(np_tensor):
-                return tensorflow.image.random_contrast(np_tensor, 0.3, 1.2)
+                return tf.image.random_contrast(np_tensor, 0.3, 1.2)
 
         def random_saturation(np_tensor):
-                return tensorflow.image.random_saturation(np_tensor, 0.3, 1.2)
+                return tf.image.random_saturation(np_tensor, 0.3, 1.2)
 
         def random_hue(np_tensor):
-                return tensorflow.image.random_hue(np_tensor, 0.2)
+                return tf.image.random_hue(np_tensor, 0.2)
 
         def gaussian_noise(np_tensor):
                 mean = 0
@@ -87,6 +85,7 @@ def data_augment(X_train_preproc, y_train, batch_size):
         augmnted_tensor = gaussian_noise(augmnted_tensor)
         return np.array(augmnted_tensor)
 
+    print(Fore.BLUE + "\nStart data augmentation..." + Style.RESET_ALL)
     train_datagen = ImageDataGenerator(featurewise_center = False,
                     featurewise_std_normalization = False,
                     rotation_range = 10,
@@ -96,6 +95,6 @@ def data_augment(X_train_preproc, y_train, batch_size):
                     zoom_range = (0.8, 1.2), brightness_range=(0.8,1.2), preprocessing_function= custom_augmentation)
 
     train_datagen.fit(X_train_preproc)
-
     train_flow = train_datagen.flow(X_train_preproc, y_train, batch_size = batch_size)
+    print('✅ Augmentation and flow of train data in batches is done successfully')
     return train_flow
