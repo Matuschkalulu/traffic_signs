@@ -9,6 +9,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.preprocessing import image
 from colorama import Fore, Style
 from sklearn.metrics import classification_report
 from traffic_signs_code.params import *
@@ -170,3 +171,14 @@ def report(model, X, y):
     print('Classification report:\n\n' ,classification_report(y, y_pred, target_names=LABELS))
     print('\nConfusion matrix:\n\n', confusion_matrix)
     print('⭐️ I am Done!')
+
+def test_model(test_path, model_vgg):
+    for img in os.listdir(test_path):
+        img = image.load_img(os.path.join(test_path,  img), target_size=(IMG_HEIGHT_VGG_, IMG_WIDTH_VGG_))
+        img_array = image.img_to_array(img)
+        img_batch = np.expand_dims(img_array, axis=0)
+        img_preprocessed = preprocess_input(img_batch)
+        prediction = model_vgg.predict(img_preprocessed)
+        plt.show()
+        print(prediction)
+        print("✅ Successfully tested")
