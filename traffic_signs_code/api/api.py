@@ -15,7 +15,9 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
-app.state.model= load_model()
+
+model_path= os.path.join(LOCAL_MODEL_PATH, 'improved_model_resnet_99.h5')
+app.state.model= load_model(model_path)
 model= app.state.model
 
 @app.post("/ImagePrediction/")
