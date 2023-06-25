@@ -50,9 +50,7 @@ Instead of cloning the repo, you can run the app directly with https://trafficsi
 </p>
 
 
-
 <video src='https://trafficsignsdet.streamlit.app/~/+/media/60fbcae10427e2d9b115deeac4907646a82c2ed5800a544c5d549313.mp4' width=150/>
-
 
 
 Feel free to try it and happy driving!
