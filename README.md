@@ -42,14 +42,13 @@ You can run the api file to test the model using the prebuilt docker image on th
 ## Run Streamlit Application
 Instead of cloning the repo, you can run the app directly with https://trafficsignsdet.streamlit.app/.
 
-<video src='https://drive.google.com/file/d/1UypN9BC3WMw76DzB_QiMEGcmTqbQDGBi/view?usp=drive_link' width=180/>
-
 
 ![f6f4c7d9d53ee5bcedb288601eccecb56d04d8469618d93a961fc803](https://github.com/Matuschkalulu/traffic_signs/assets/107108097/e51c676e-e557-4ae7-890a-0f9c0388df59)
 
 
 ![img_readme2](https://github.com/Matuschkalulu/traffic_signs/assets/107108097/1bb6de38-e369-47a4-85fd-0c3d607c69ab)
 
+Example video: https://bit.ly/trafficsign_det
 
 Feel free to try it and happy driving!
 
